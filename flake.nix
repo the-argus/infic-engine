@@ -26,9 +26,18 @@
       devShell =
         pkgs.mkShell
         {
-          packages = with pkgs; [
-            zig-overlay.packages.${system}.master
-          ];
+          packages = with pkgs;
+            [
+              zig-overlay.packages.${system}.master
+              libGL
+            ]
+            ++ (with pkgs.xorg; [
+              libX11
+              libXrandr
+              libXinerama
+              libXcursor
+              libXi
+            ]);
         };
     });
 }

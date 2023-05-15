@@ -9,5 +9,6 @@ pub fn build(b: *std.Build) !void {
         .root_source_file = .{ .path = "main.zig" },
         .optimize = optimize,
     });
+    b.installArtifact(exe);
     raylib.addTo(b, exe, target, optimize);
 }
