@@ -10,5 +10,6 @@ pub fn build(b: *std.Build) !void {
         .optimize = optimize,
     });
     b.installArtifact(exe);
+
     raylib.addTo(b, exe, target, optimize);
 }
