@@ -4,11 +4,13 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    zig-overlay.url = "github:mitchellh/zig-overlay";
   };
 
   outputs = {
     nixpkgs,
     flake-utils,
+    zig-overlay,
     ...
   }: let
     supportedSystems = let
@@ -25,16 +27,7 @@
         pkgs.mkShell
         {
           packages = with pkgs; [
-            zig
-            # (zig.overrideAttrs (_: rec {
-            # version = "";
-            #   src = pkgs.fetchFromGitHub {
-            #     owner = "ziglang";
-            #     repo = "zig";
-            #     rev = version;
-            #     hash = "sha256-69QIkkKzApOGfrBdgtmxFMDytRkSh+0YiaJQPbXsBeo=";
-            #   };
-            # }))
+            zig-overlay.packages.${system}.master
           ];
         };
     });

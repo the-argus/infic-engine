@@ -3,6 +3,11 @@ const std = @import("std");
 
 pub fn build(b: *std.Build) !void {
     const target = b.standardTargetOptions(.{});
-    const exe = "infic";
-    raylib.addTo(b, exe, target);
+    const optimize = b.standardOptimizeOption(.{});
+    const exe = b.addExecutable(.{
+        .name = "infic",
+        .root_source_file = .{ .path = "main.zig" },
+        .optimize = optimize,
+    });
+    raylib.addTo(b, exe, target, optimize);
 }
