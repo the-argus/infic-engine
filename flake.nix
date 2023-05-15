@@ -2,7 +2,7 @@
   description = "Environment for infic engine";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-22.11";
+    nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -26,6 +26,15 @@
         {
           packages = with pkgs; [
             zig
+            # (zig.overrideAttrs (_: rec {
+            # version = "";
+            #   src = pkgs.fetchFromGitHub {
+            #     owner = "ziglang";
+            #     repo = "zig";
+            #     rev = version;
+            #     hash = "sha256-69QIkkKzApOGfrBdgtmxFMDytRkSh+0YiaJQPbXsBeo=";
+            #   };
+            # }))
           ];
         };
     });
