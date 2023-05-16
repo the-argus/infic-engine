@@ -10,7 +10,7 @@ pub fn main() void {
     while (!raylib.WindowShouldClose()) {
         raylib.BeginDrawing();
         defer raylib.EndDrawing();
-        
+
         raylib.ClearBackground(raylib.BLACK);
         raylib.DrawFPS(10, 10);
 
