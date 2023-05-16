@@ -4,13 +4,11 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    zig-overlay.url = "github:mitchellh/zig-overlay";
   };
 
   outputs = {
     nixpkgs,
     flake-utils,
-    zig-overlay,
     self,
     ...
   }: let
@@ -34,8 +32,8 @@
         {
           packages = with pkgs;
             [
-              # zig-overlay.packages.${system}.master
               self.packages.${system}.zig
+              python3Minimal
               libGL
               glfw
             ]
