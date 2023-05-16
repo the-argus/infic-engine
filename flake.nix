@@ -21,7 +21,24 @@
     ];
   in
     flake-utils.lib.eachSystem supportedSystems (system: let
-      pkgs = import nixpkgs {inherit system;};
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [
+          (_: super: {
+            glibc = super.glibc.overrideAttrs (_: let
+              version = "2.36";
+              patchSuffix = "-8";
+              sha256 = "";
+            in {
+              version = version + patchSuffix;
+              src = super.fetchurl {
+                url = "mirror://gnu/glibc/glibc-${version}.tar.xz";
+                inherit sha256;
+              };
+            });
+          })
+        ];
+      };
     in {
       devShell =
         pkgs.mkShell
@@ -30,6 +47,7 @@
             [
               zig-overlay.packages.${system}.master
               libGL
+              glfw
             ]
             ++ (with pkgs.xorg; [
               libX11
