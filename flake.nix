@@ -11,6 +11,7 @@
     nixpkgs,
     flake-utils,
     zig-overlay,
+    self,
     ...
   }: let
     supportedSystems = let
@@ -23,12 +24,18 @@
     flake-utils.lib.eachSystem supportedSystems (system: let
       pkgs = import nixpkgs {inherit system;};
     in {
+      packages = {
+        zig = pkgs.callPackage ./nix/zig.nix {
+          llvmPackages = pkgs.llvmPackages_16;
+        };
+      };
       devShell =
         pkgs.mkShell
         {
           packages = with pkgs;
             [
-              zig-overlay.packages.${system}.master
+              # zig-overlay.packages.${system}.master
+              self.packages.${system}.zig
               libGL
               glfw
             ]
